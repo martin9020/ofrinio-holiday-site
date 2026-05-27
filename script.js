@@ -29,6 +29,7 @@ const photos = [
 ];
 
 const gallery = document.querySelector("#galleryGrid");
+const galleryToggle = document.querySelector("[data-gallery-toggle]");
 const dialog = document.querySelector("#photoDialog");
 const dialogImage = document.querySelector("#lightboxImage");
 const dialogCaption = document.querySelector("#lightboxCaption");
@@ -61,6 +62,20 @@ const availabilityState = {
   loaded: false
 };
 
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
+if (!window.location.hash) {
+  window.addEventListener("load", () => {
+    requestAnimationFrame(() => window.scrollTo(0, 0));
+  }, { once: true });
+
+  window.addEventListener("pageshow", () => {
+    requestAnimationFrame(() => window.scrollTo(0, 0));
+  });
+}
+
 function photoPath(fileName) {
   return `assets/photos/${fileName}`;
 }
@@ -92,7 +107,7 @@ function renderGallery() {
     const image = document.createElement("img");
     image.src = photoPath(fileName);
     image.alt = caption;
-    image.loading = index < 4 ? "eager" : "lazy";
+    image.loading = index < 8 ? "eager" : "lazy";
 
     const label = document.createElement("span");
     label.textContent = caption;
@@ -102,6 +117,37 @@ function renderGallery() {
   });
 
   gallery.append(fragment);
+}
+
+function setupMobileGallery() {
+  if (!gallery || !galleryToggle) return;
+
+  const mobileQuery = window.matchMedia("(max-width: 640px)");
+
+  function applyState() {
+    if (mobileQuery.matches && !gallery.dataset.expanded) {
+      gallery.classList.add("is-collapsed");
+      galleryToggle.hidden = false;
+      galleryToggle.textContent = `Покажи всички снимки (${photos.length})`;
+    } else {
+      gallery.classList.remove("is-collapsed");
+      galleryToggle.hidden = !mobileQuery.matches;
+      galleryToggle.textContent = "Скрий част от снимките";
+    }
+  }
+
+  galleryToggle.addEventListener("click", () => {
+    if (gallery.dataset.expanded) {
+      delete gallery.dataset.expanded;
+      document.querySelector("#gallery").scrollIntoView({ block: "start" });
+    } else {
+      gallery.dataset.expanded = "true";
+    }
+    applyState();
+  });
+
+  mobileQuery.addEventListener("change", applyState);
+  applyState();
 }
 
 function dateKey(year, month, day) {
@@ -240,4 +286,5 @@ dialog.addEventListener("click", (event) => {
 });
 
 renderGallery();
+setupMobileGallery();
 setupAvailabilityCalendar();
