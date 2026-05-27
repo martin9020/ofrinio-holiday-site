@@ -383,6 +383,16 @@ main > section[id] {
   color: rgba(255, 255, 255, 0.84);
 }
 
+.calendar-section .calendar-layout {
+  grid-template-columns: 1fr;
+  align-items: stretch;
+  gap: 28px;
+}
+
+.calendar-copy {
+  max-width: 760px;
+}
+
 .calendar-frame,
 .map-frame {
   overflow: hidden;
@@ -400,6 +410,178 @@ main > section[id] {
   height: 100%;
   min-height: inherit;
   border: 0;
+}
+
+.availability-calendar {
+  overflow: hidden;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 8px;
+  background: #fffaf1;
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+
+.availability-toolbar {
+  display: grid;
+  grid-template-columns: 46px 1fr 46px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 12px;
+  border: 1px solid rgba(23, 33, 38, 0.1);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.availability-toolbar button {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--deep-sea);
+  cursor: pointer;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.availability-toolbar div {
+  text-align: center;
+}
+
+.availability-toolbar strong {
+  display: block;
+  font-size: 1.65rem;
+  line-height: 1.1;
+}
+
+.availability-toolbar span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.availability-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 14px;
+  color: #415057;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.availability-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.availability-legend i {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border-radius: 4px;
+}
+
+.legend-free {
+  background: #e8f5ec;
+  border: 1px solid #2c5f3a;
+}
+
+.legend-booked {
+  background: #e8604c;
+}
+
+.legend-pending {
+  background: #e8a820;
+}
+
+.availability-weekdays,
+.availability-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.availability-weekdays {
+  margin-bottom: 5px;
+}
+
+.availability-weekdays span {
+  min-width: 0;
+  color: #2c5f3a;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.availability-day {
+  min-width: 0;
+  min-height: 92px;
+  padding: 8px;
+  border: 1px solid #e8e0d4;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.availability-day.empty {
+  border-color: transparent;
+  background: transparent;
+}
+
+.availability-day.today {
+  border-color: #2c5f3a;
+  background: #e8f5ec;
+}
+
+.availability-day.booked {
+  border-color: #e8604c;
+  background: #fde8e5;
+}
+
+.availability-day.pending {
+  border-color: #e8a820;
+  background: #fff7d7;
+}
+
+.availability-day-number {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.availability-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: 7px;
+  color: #2c5f3a;
+  background: #e8f5ec;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.availability-day.booked .availability-pill {
+  color: #fff;
+  background: #e8604c;
+}
+
+.availability-day.pending .availability-pill {
+  color: #fff;
+  background: #e8a820;
+}
+
+.availability-label-short {
+  display: none;
 }
 
 .price-grid {
@@ -709,6 +891,63 @@ main > section[id] {
   .calendar-frame,
   .calendar-frame iframe {
     min-height: 640px;
+  }
+
+  .availability-calendar {
+    padding: 12px;
+  }
+
+  .availability-toolbar {
+    grid-template-columns: 40px 1fr 40px;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .availability-toolbar button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .availability-toolbar strong {
+    font-size: 1.24rem;
+  }
+
+  .availability-legend {
+    gap: 8px;
+    font-size: 0.78rem;
+  }
+
+  .availability-weekdays,
+  .availability-grid {
+    gap: 3px;
+  }
+
+  .availability-weekdays span {
+    font-size: 0.72rem;
+  }
+
+  .availability-day {
+    min-height: 64px;
+    padding: 5px;
+  }
+
+  .availability-day-number {
+    margin-bottom: 5px;
+    font-size: 0.82rem;
+  }
+
+  .availability-pill {
+    min-height: 20px;
+    padding: 2px 5px;
+    font-size: 0.68rem;
+  }
+
+  .availability-label-full {
+    display: none;
+  }
+
+  .availability-label-short {
+    display: inline;
   }
 
   .map-frame,

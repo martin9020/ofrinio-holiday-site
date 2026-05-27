@@ -123,19 +123,37 @@
           <p class="section-kicker">Свободни дати</p>
           <h2 id="calendar-title">Проверете календара преди резервация</h2>
           <p>
-            Календарът е свързан с текущата страница за наличности.
+            Календарът е само за преглед и показва свободни, заети и чакащи дати.
             За потвърждение на цена и дати се обадете на 0888 124 195.
           </p>
           <div class="inline-actions">
             <a class="button primary" href="tel:+359888124195">Резервация</a>
-            <a class="button secondary" href="https://martin9020.github.io/calendar/" target="_blank" rel="noopener">Отвори календара</a>
           </div>
         </div>
-        <div class="calendar-frame">
-          <iframe
-            title="Календар със свободни дати"
-            src="https://martin9020.github.io/calendar/"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="availability-calendar" data-availability-calendar>
+          <div class="availability-toolbar">
+            <button type="button" data-calendar-prev aria-label="Предишен месец">‹</button>
+            <div>
+              <strong data-calendar-title>Календар</strong>
+              <span data-calendar-status>Зареждане...</span>
+            </div>
+            <button type="button" data-calendar-next aria-label="Следващ месец">›</button>
+          </div>
+          <div class="availability-legend" aria-label="Легенда">
+            <span><i class="legend-free"></i>Свободно</span>
+            <span><i class="legend-booked"></i>Заето</span>
+            <span><i class="legend-pending"></i>Запитване</span>
+          </div>
+          <div class="availability-weekdays" aria-hidden="true">
+            <span>Пон</span>
+            <span>Вт</span>
+            <span>Ср</span>
+            <span>Чет</span>
+            <span>Пет</span>
+            <span>Съб</span>
+            <span>Нед</span>
+          </div>
+          <div class="availability-grid" data-calendar-grid aria-label="Календар със свободни дати"></div>
         </div>
       </div>
     </section>
