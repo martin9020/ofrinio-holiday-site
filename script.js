@@ -214,17 +214,25 @@ async function loadAvailability() {
   if (!availabilityRoot) return;
 
   try {
-    const endpoint = `${availabilityConfig.supabaseUrl}/rest/v1/reservations?select=date,status&order=date.asc`;
-    const response = await fetch(endpoint, {
-      headers: {
-        apikey: availabilityConfig.supabaseKey,
-        Authorization: `Bearer ${availabilityConfig.supabaseKey}`
-      }
-    });
+    const headers = {
+      apikey: availabilityConfig.supabaseKey,
+      Authorization: `Bearer ${availabilityConfig.supabaseKey}`
+    };
+    const endpoints = [
+      `${availabilityConfig.supabaseUrl}/rest/v1/public_availability?select=date,status&order=date.asc`,
+      `${availabilityConfig.supabaseUrl}/rest/v1/reservations?select=date,status&order=date.asc`
+    ];
 
-    if (!response.ok) throw new Error("availability request failed");
+    let rows = null;
 
-    const rows = await response.json();
+    for (const endpoint of endpoints) {
+      const response = await fetch(endpoint, { headers });
+      if (!response.ok) continue;
+      rows = await response.json();
+      break;
+    }
+
+    if (!rows) throw new Error("availability request failed");
     const grouped = new Map();
 
     rows.forEach((row) => {
