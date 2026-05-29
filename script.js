@@ -41,6 +41,8 @@ const availabilityConfig = {
   supabaseKey: "sb_publishable_TkdiVOTUPQqrkuY3UVPC1A_BYWj7KnC"
 };
 
+const visitTrackingEndpoint = `${availabilityConfig.supabaseUrl}/functions/v1/track-visit`;
+
 const monthNames = [
   "Януари",
   "Февруари",
@@ -74,6 +76,22 @@ if (!window.location.hash) {
   window.addEventListener("pageshow", () => {
     requestAnimationFrame(() => window.scrollTo(0, 0));
   });
+}
+
+function trackVisit() {
+  const payload = {
+    site: "ofrinio-holiday-site",
+    path: `${window.location.pathname}${window.location.search}`,
+    referrer: document.referrer || "",
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || ""
+  };
+
+  fetch(visitTrackingEndpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    keepalive: true
+  }).catch(() => {});
 }
 
 function photoPath(fileName) {
@@ -296,3 +314,4 @@ dialog.addEventListener("click", (event) => {
 renderGallery();
 setupMobileGallery();
 setupAvailabilityCalendar();
+trackVisit();
